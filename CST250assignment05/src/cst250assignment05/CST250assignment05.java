@@ -8,22 +8,55 @@ package cst250assignment05;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.counting;
 
 
-/**
- *
- * @author ssyed
- */
 public class CST250assignment05 {
+   
     
+    public static String FILE_PATH = "happy.txt";
     
-   public static void main(String [] args) throws FileNotFoundException 
-   {
-      String row1 = "It might seem crazy what I am 'bout to say";
+    public void countWords(final Path file) throws IOException {
+    Arrays.stream(new String(Files.readAllBytes(file), StandardCharsets.UTF_8).split("\\W+"))
+        .collect(Collectors.groupingBy(Function.<String>identity(), TreeMap::new, counting())).entrySet()
+        .forEach(System.out::println);
+}
+
+     static int calculateNoOfUniqueWords(String str) {
+        String[] words = str.split(" ");
+        boolean[] array = new boolean[words.length];
+        int j, i = 0;
+        int count = 0;
+        for (i = 0; i < words.length; i++) {
+            if (!array[i]) {
+                count++;
+                for (j = i + 1; j < words.length; j++) {
+                    if (words[j].compareTo(words[i]) == 0) {
+                        array[j] = true;
+                        count--;
+                    }
+        }
+        return 0;
+            }
+        }
+         return 0;
+     }
+         public static void main(String[] args) throws FileNotFoundException {
+             
+         String row1 = "It might seem crazy what I am 'bout to say";
       String row2 = "Sunshine she's here, you can take a break";
       String row3 = "I'm a hot air balloon that could go to space";
       String row4 = "With the air, like I don't care, baby by the way";
@@ -90,9 +123,9 @@ public class CST250assignment05 {
       String row65 = "(Because I'm happy)";
       String row66 = "Clap along if you feel like that's what you wanna do";
       String row67 = "Come on";
-      
-      
-      
+
+
+
 
       //print verse 1
       System.out.println(row1);
@@ -100,27 +133,27 @@ public class CST250assignment05 {
       System.out.println(row3);
       System.out.println(row4);
       System.out.println("");
-      
+
        //print verse 2
       System.out.println(row5);
       System.out.println(row6);
       System.out.println(row7);
       System.out.println(row8);
       System.out.println("");
-      
+
       //print verse 3
       System.out.println(row9);
       System.out.println(row10);
       System.out.println(row11);
       System.out.println(row12);
       System.out.println("");
-      
+
       //print verse 4
       System.out.println(row13);
       System.out.println(row14);
       System.out.println(row15);
       System.out.println("");
-      
+
       //print verse 5
       System.out.println(row16);
       System.out.println(row17);
@@ -129,7 +162,7 @@ public class CST250assignment05 {
       System.out.println(row20);
       System.out.println(row21);
       System.out.println("");
-      
+
       //print verse 6
       System.out.println(row22);
       System.out.println(row23);
@@ -142,7 +175,7 @@ public class CST250assignment05 {
       System.out.println(row27);
       System.out.println(row28);
       System.out.println("");
-      
+
       //print verse 8
       System.out.println(row29);
       System.out.println(row30);
@@ -151,21 +184,21 @@ public class CST250assignment05 {
       System.out.println(row33);
       System.out.println(row34);
       System.out.println(""); 
-      
+
       //print verse 9
       System.out.println(row35);
       System.out.println(row36);
       System.out.println(row37);
       System.out.println(row38);
       System.out.println("");
-      
+
       //print verse 10
       System.out.println(row39);
       System.out.println(row40);
       System.out.println(row41);
       System.out.println(row42);
       System.out.println("");
-      
+
       //print verse 11
       System.out.println(row43);
       System.out.println(row44);
@@ -174,7 +207,7 @@ public class CST250assignment05 {
       System.out.println(row47);
       System.out.println(row48);
       System.out.println(""); 
-      
+
        //print verse 12
       System.out.println(row49);
       System.out.println(row50);
@@ -183,7 +216,7 @@ public class CST250assignment05 {
       System.out.println(row53);
       System.out.println(row54);
       System.out.println(""); 
-      
+
        //print verse 13
       System.out.println(row55);
       System.out.println(row56);
@@ -198,14 +231,14 @@ public class CST250assignment05 {
       System.out.println(row63);
       System.out.println(row64);
       System.out.println("");  
-      
+
        //print verse 15
       System.out.println(row65);
       System.out.println(row66);
       System.out.println(row67);
-      System.out.println("");  
-      
-      String str = "happy = 34 words = 416 ";
+      System.out.println("");       
+         
+             String str = "happy =34 416 ";
       String[] strArray = str.split("\\s+");
       Map<String, String> hMap = new LinkedHashMap<>();
        for (String strArray1 : strArray) {
@@ -214,12 +247,20 @@ public class CST250assignment05 {
            }
        }
       System.out.println(hMap);
-      
-   
-   }
-}
-      
-
-      
-    
+        
+        BufferedReader br = new BufferedReader
+                            (new InputStreamReader(System.in));
+       
+        System.out.println("Enter the string");
+        try {
+            str = br.readLine();
+        } catch (IOException e) {
+            System.out.println("An I/O error occurred");
+            return;
+        }
+        int count = calculateNoOfUniqueWords(str);
+        System.out.println("Total number of unique words in \"" + 
+                                         str + "\" are " + count);
+    }   
   
+}
